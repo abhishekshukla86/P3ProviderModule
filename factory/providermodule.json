@@ -1,0 +1,9 @@
+{
+	"name": "providermodule",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "20a178f8-21e7-436b-9d64-8d7056e260a4",
+		"tenantId": "c249285a-8518-4e3c-aa5d-900337a62b4b"
+	}
+}
