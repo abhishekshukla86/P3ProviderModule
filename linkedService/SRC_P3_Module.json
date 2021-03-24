@@ -1,0 +1,12 @@
+{
+	"name": "SRC_P3_Module",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=p3storagegroup;EndpointSuffix=core.windows.net;",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlBST1ZJREVSTU9EVUxFX2FjZmVlM2MxLTRkNTgtNDllMy05MTI1LWU5ZWZlYTc1NmY5MSINCn0="
+		}
+	}
+}
