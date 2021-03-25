@@ -13,7 +13,7 @@
 				"fileName": "SRC_SpecialityTaxonomyCodes.csv",
 				"container": "providermodel"
 			},
-			"columnDelimiter": "",
+			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
