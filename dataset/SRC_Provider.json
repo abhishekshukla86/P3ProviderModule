@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "SRC_Provider_1.csv",
+				"fileName": "SRC_Provider_2.csv",
 				"container": "providermodel"
 			},
 			"columnDelimiter": ",",
