@@ -11,7 +11,7 @@
 			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "SRC_LanguageCodes.xlsx",
+				"fileName": "SRC_LanguageCodes_non_dupli.xlsx",
 				"container": "providermodel"
 			},
 			"firstRowAsHeader": true
