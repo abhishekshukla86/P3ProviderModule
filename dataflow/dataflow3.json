@@ -3,18 +3,10 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [
-				{
-					"dataset": {
-						"referenceName": "SRC_SpecialityTaxonomyCodes",
-						"type": "DatasetReference"
-					},
-					"name": "source1"
-				}
-			],
+			"sources": [],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(output(\n\t\tSpeciality_KEY as string,\n\t\t{CMS SPECIALTY CODE} as string,\n\t\t{CMS SPECIALTY DESCRIPTION} as string,\n\t\t{PROVIDER TAXONOMY CODE} as string,\n\t\t{PROVIDER TAXONOMY DESCRIPTION TYPE} as string,\n\t\t{PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION} as string,\n\t\t{RBI DATA SPECIALITY CODE} as string,\n\t\t{PROVIDER TYPE} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1"
+			"script": ""
 		}
 	}
 }
