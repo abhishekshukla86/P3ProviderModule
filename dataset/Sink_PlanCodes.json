@@ -1,0 +1,25 @@
+{
+	"name": "Sink_PlanCodes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Plan_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Plan_Code_description",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "REF_PlanCodes"
+		}
+	}
+}
