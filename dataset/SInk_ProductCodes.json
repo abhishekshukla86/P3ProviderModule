@@ -1,0 +1,25 @@
+{
+	"name": "SInk_ProductCodes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Product_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Product_Code_Description",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "REF_ProductCodes"
+		}
+	}
+}
