@@ -7,13 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "providermodule"
 		},
-		"SRC_P3_Module_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SRC_P3_Module'"
-		},
 		"AzureSqlDatabase1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"SRC_P3_Module_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SRC_P3_Module'"
 		},
 		"containerUri": {
 			"type": "string",
@@ -42,15 +42,35 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"SRC_P3_Module_connectionString": {
-						"value": "[parameters('SRC_P3_Module_connectionString')]"
-					},
 					"AzureSqlDatabase1_connectionString": {
 						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
+					},
+					"SRC_P3_Module_connectionString": {
+						"value": "[parameters('SRC_P3_Module_connectionString')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "providermodule_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'providermodule_ArmTemplate_0')]"
+			]
 		}
 	]
 }

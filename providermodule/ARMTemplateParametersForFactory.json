@@ -5,10 +5,10 @@
 		"factoryName": {
 			"value": "providermodule"
 		},
-		"SRC_P3_Module_connectionString": {
+		"AzureSqlDatabase1_connectionString": {
 			"value": ""
 		},
-		"AzureSqlDatabase1_connectionString": {
+		"SRC_P3_Module_connectionString": {
 			"value": ""
 		}
 	}
