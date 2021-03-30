@@ -1,0 +1,222 @@
+{
+	"name": "Sink_STG_ProviderTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Client_Provider_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "CMS_Provider_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "UPIN",
+				"type": "varchar"
+			},
+			{
+				"name": "Full_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Name_Prefix",
+				"type": "char"
+			},
+			{
+				"name": "First_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Middle_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Last_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Professional_Suffix",
+				"type": "char"
+			},
+			{
+				"name": "PROVIDER_TITLE",
+				"type": "char"
+			},
+			{
+				"name": "Company_Name",
+				"type": "char"
+			},
+			{
+				"name": "Email_Address",
+				"type": "char"
+			},
+			{
+				"name": "Email_Usage_Type_Code",
+				"type": "char"
+			},
+			{
+				"name": "Address_Line_1",
+				"type": "varchar"
+			},
+			{
+				"name": "Address_Line_2",
+				"type": "varchar"
+			},
+			{
+				"name": "City",
+				"type": "varchar"
+			},
+			{
+				"name": "County",
+				"type": "char"
+			},
+			{
+				"name": "State_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Zip",
+				"type": "varchar"
+			},
+			{
+				"name": "Phone_Number_1",
+				"type": "varchar"
+			},
+			{
+				"name": "Phone_Number_2",
+				"type": "varchar"
+			},
+			{
+				"name": "Phone_Number_3",
+				"type": "char"
+			},
+			{
+				"name": "Fax_Number_1",
+				"type": "varchar"
+			},
+			{
+				"name": "Fax_Number_2",
+				"type": "char"
+			},
+			{
+				"name": "Fax_Number_3",
+				"type": "char"
+			},
+			{
+				"name": "Client_Location_ID",
+				"type": "char"
+			},
+			{
+				"name": "Location_Name",
+				"type": "char"
+			},
+			{
+				"name": "Location_Usage_Type_Code",
+				"type": "char"
+			},
+			{
+				"name": "Location_Contact_Full_Name",
+				"type": "char"
+			},
+			{
+				"name": "Location_Contact_First_Name",
+				"type": "char"
+			},
+			{
+				"name": "Location_Contact_Last_Name",
+				"type": "char"
+			},
+			{
+				"name": "Provider_Location_Effective_Date",
+				"type": "date"
+			},
+			{
+				"name": "Provider_Location_Termination_Date",
+				"type": "date"
+			},
+			{
+				"name": "Usage_Preference_Code",
+				"type": "char"
+			},
+			{
+				"name": "NPI",
+				"type": "varchar"
+			},
+			{
+				"name": "DEA_Number",
+				"type": "varchar"
+			},
+			{
+				"name": "TIN",
+				"type": "char"
+			},
+			{
+				"name": "TIMELY_FILING_LIMIT",
+				"type": "varchar"
+			},
+			{
+				"name": "SSN",
+				"type": "char"
+			},
+			{
+				"name": "Provider_Effective_Date",
+				"type": "char"
+			},
+			{
+				"name": "Provider_Termination_Date",
+				"type": "char"
+			},
+			{
+				"name": "Network_Ind",
+				"type": "char"
+			},
+			{
+				"name": "Facility_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Management_Group_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Primary_Language_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Location_Key",
+				"type": "varchar"
+			},
+			{
+				"name": "Exclude_From_MR_Chase",
+				"type": "varchar"
+			},
+			{
+				"name": "Exclude_From_PR_Relationship",
+				"type": "varchar"
+			},
+			{
+				"name": "Source_System_Of_Record",
+				"type": "char"
+			},
+			{
+				"name": "Medicare_Facility_Number",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Provider"
+		}
+	}
+}
