@@ -1,0 +1,25 @@
+{
+	"name": "SinkLanguageCodes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Language_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Language_Name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "REF_LanguageCodes"
+		}
+	}
+}
