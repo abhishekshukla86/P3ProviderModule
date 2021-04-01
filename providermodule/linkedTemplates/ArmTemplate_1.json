@@ -13,6 +13,642 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Sink_load_provider_type1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_Type_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_Type_Description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_ProviderType"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_provider_data1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_ProviderTypeCode.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Code",
+						"type": "String"
+					},
+					{
+						"name": "Description",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_provider_data_1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_ProviderTypeCode.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Code",
+						"type": "String"
+					},
+					{
+						"name": "Description",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LOAD_PROVIDER_DATA')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_PROVIDER_DATA",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "P3MemberStaging_REF_DATA",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_STG_ProviderTable",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Lookup1"
+						}
+					],
+					"script": "source(output(\n\t\tPROVIDER_ID as string,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tNPI as string,\n\t\tTIN as string,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tFIRST_NAME as string,\n\t\tMIDDLE_NAME as string,\n\t\tLAST_NAME as string,\n\t\tPROVIDER_NAME_PREFIX as string,\n\t\tPROVIDER_NAME_SUFIX as string,\n\t\tPROVIDER_TITLE as string,\n\t\tPHYSICAL_ADDRESS1 as string,\n\t\tPHYSICAL_ADDRESS2 as string,\n\t\tPHYSICAL_CITY as string,\n\t\tPHYSICAL_STATE as string,\n\t\tPHYSICAL_ZIP as string,\n\t\tPHONE as string,\n\t\tFAX as string,\n\t\tEXCLUDEFROMMRCHASE as string,\n\t\tEXCLUDEFROMPRRELATIONSHIP as string,\n\t\tDEA_NUMBER as string,\n\t\tLANGUAGE as string,\n\t\tClient_Provider_ID as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tCounty as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tSSN as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tLocation_Key as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string,\n\t\tProvider_Location_Effective_Date as string,\n\t\tProvider_Location_Termination_Date as string,\n\t\tUsage_Preference_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tRef_Data_ID as integer,\n\t\tRef_Table as string,\n\t\tRef_Field as string,\n\t\tReference_Code as string,\n\t\tReference_Code_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource1 derive(FULL_NAME = FIRST_NAME + ' ' +MIDDLE_NAME + LAST_NAME) ~> DerivedColumn1\nDerivedColumn1, source2 lookup(LANGUAGE == Reference_Code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup1\nLookup1 sink(input(\n\t\tProvider_ID as integer,\n\t\tClient_Provider_ID as string,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tFull_Name as string,\n\t\tName_Prefix as string,\n\t\tFirst_Name as string,\n\t\tMiddle_Name as string,\n\t\tLast_Name as string,\n\t\tProfessional_Suffix as string,\n\t\tPROVIDER_TITLE as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tAddress_Line_1 as string,\n\t\tAddress_Line_2 as string,\n\t\tCity as string,\n\t\tCounty as string,\n\t\tState_Code as string,\n\t\tZip as string,\n\t\tPhone_Number_1 as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_1 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tProvider_Location_Effective_Date as date,\n\t\tProvider_Location_Termination_Date as date,\n\t\tUsage_Preference_Code as string,\n\t\tNPI as string,\n\t\tDEA_Number as string,\n\t\tTIN as string,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tSSN as string,\n\t\tProvider_Effective_Date as string,\n\t\tProvider_Termination_Date as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tPrimary_Language_Code as string,\n\t\tLocation_Key as string,\n\t\tExclude_From_MR_Chase as string,\n\t\tExclude_From_PR_Relationship as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_ID = PROVIDER_ID,\n\t\tCMS_Provider_ID,\n\t\tUPIN,\n\t\tNPI,\n\t\tTIN,\n\t\tTIMELY_FILING_LIMIT,\n\t\tFull_Name = FULL_NAME,\n\t\tFirst_Name = FIRST_NAME,\n\t\tMiddle_Name = MIDDLE_NAME,\n\t\tLast_Name = LAST_NAME,\n\t\tName_Prefix = PROVIDER_NAME_PREFIX,\n\t\tProfessional_Suffix = PROVIDER_NAME_SUFIX,\n\t\tPROVIDER_TITLE,\n\t\tAddress_Line_1 = PHYSICAL_ADDRESS1,\n\t\tAddress_Line_2 = PHYSICAL_ADDRESS2,\n\t\tCity = PHYSICAL_CITY,\n\t\tState_Code = PHYSICAL_STATE,\n\t\tZip = PHYSICAL_ZIP,\n\t\tPhone_Number_1 = PHONE,\n\t\tFax_Number_1 = FAX,\n\t\tExclude_From_MR_Chase = EXCLUDEFROMMRCHASE,\n\t\tExclude_From_PR_Relationship = EXCLUDEFROMPRRELATIONSHIP,\n\t\tDEA_Number = DEA_NUMBER,\n\t\tPrimary_Language_Code = LANGUAGE,\n\t\tClient_Provider_ID,\n\t\tCompany_Name,\n\t\tEmail_Address,\n\t\tEmail_Usage_Type_Code,\n\t\tCounty,\n\t\tPhone_Number_2,\n\t\tPhone_Number_3,\n\t\tFax_Number_2,\n\t\tFax_Number_3,\n\t\tClient_Location_ID,\n\t\tLocation_Name,\n\t\tLocation_Usage_Type_Code,\n\t\tNPI = Location_Contact_Full_Name,\n\t\tLocation_Contact_Full_Name = Location_Contact_First_Name,\n\t\tLocation_Contact_First_Name = Location_Contact_Last_Name,\n\t\tSSN,\n\t\tNetwork_Ind,\n\t\tFacility_Code,\n\t\tManagement_Group_Code,\n\t\tNetwork_Ind,\n\t\tFacility_Code,\n\t\tManagement_Group_Code,\n\t\tLocation_Key,\n\t\tSource_System_Of_Record,\n\t\tMedicare_Facility_Number,\n\t\tExclude_From_PR_Relationship = Provider_Location_Effective_Date,\n\t\tSource_System_Of_Record = Provider_Location_Termination_Date,\n\t\tUsage_Preference_Code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Language_Codes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_Language_Codes",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SinkLanguageCodes",
+								"type": "DatasetReference"
+							},
+							"name": "SinkLanguagecodes"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\t{ISO 639-2 Code} as string,\n\t\t{English name of Language} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tLanguage_Code as string,\n\t\tLanguage_Name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tLanguage_Code = {ISO 639-2 Code},\n\t\tLanguage_Name = {English name of Language}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> SinkLanguagecodes"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LoadProductCodes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_ProductCodes",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SInk_ProductCodes",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\t{PRODUCT CODE} as string,\n\t\tDESCRIPTION as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tProduct_Code as string,\n\t\tProduct_Code_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProduct_Code = {PRODUCT CODE},\n\t\tProduct_Code_Description = DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_PlanCodes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Excel1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_PlanCodes",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tPlanCode as string,\n\t\tPlanDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tPlan_Code as string,\n\t\tPlan_Code_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tPlan_Code = PlanCode,\n\t\tPlan_Code_description = PlanDescription\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PRO_ALT_IDENT')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_Pro_alt_identifier",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Select1"
+						}
+					],
+					"script": "source(output(\n\t\tPROVIDER_ID as string,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tNPI as string,\n\t\tTIN as string,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tFIRST_NAME as string,\n\t\tMIDDLE_NAME as string,\n\t\tLAST_NAME as string,\n\t\tPROVIDER_NAME_PREFIX as string,\n\t\tPROVIDER_NAME_SUFIX as string,\n\t\tPROVIDER_TITLE as string,\n\t\tPHYSICAL_ADDRESS1 as string,\n\t\tPHYSICAL_ADDRESS2 as string,\n\t\tPHYSICAL_CITY as string,\n\t\tPHYSICAL_STATE as string,\n\t\tPHYSICAL_ZIP as string,\n\t\tPHONE as string,\n\t\tFAX as string,\n\t\tEXCLUDEFROMMRCHASE as string,\n\t\tEXCLUDEFROMPRRELATIONSHIP as string,\n\t\tDEA_NUMBER as string,\n\t\tLANGUAGE as string,\n\t\tClient_Provider_ID as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tCounty as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tSSN as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tLocation_Key as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string,\n\t\tProvider_Location_Effective_Date as string,\n\t\tProvider_Location_Termination_Date as string,\n\t\tUsage_Preference_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 derive(PROVIDER_ALTERNATE_IDENTIFIER = PROVIDER_ID + TIN) ~> DerivedColumn1\nDerivedColumn1 select(mapColumn(\n\t\tPROVIDER_ID,\n\t\tPROVIDER_ALTERNATE_IDENTIFIER\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(input(\n\t\tProvider_Alternate_Identifier as string,\n\t\tProvider_ID as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Alternate_Identifier = PROVIDER_ALTERNATE_IDENTIFIER,\n\t\tProvider_ID = PROVIDER_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "load_provider_data1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_load_provider_type1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tCode as string,\n\t\tDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tProvider_Type_Code as string,\n\t\tProvider_Type_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Type_Code = Code,\n\t\tProvider_Type_Description = Description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/load_provider_data1')]",
+				"[concat(variables('factoryId'), '/datasets/Sink_load_provider_type1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_Provider",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_Provider_Alternate_Identifier",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tPROVIDER_ID as string,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tNPI as string,\n\t\tTIN as string,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tFIRST_NAME as string,\n\t\tMIDDLE_NAME as string,\n\t\tLAST_NAME as string,\n\t\tPROVIDER_NAME_PREFIX as string,\n\t\tPROVIDER_NAME_SUFIX as string,\n\t\tPROVIDER_TITLE as string,\n\t\tPHYSICAL_ADDRESS1 as string,\n\t\tPHYSICAL_ADDRESS2 as string,\n\t\tPHYSICAL_CITY as string,\n\t\tPHYSICAL_STATE as string,\n\t\tPHYSICAL_ZIP as string,\n\t\tPHONE as string,\n\t\tFAX as string,\n\t\tEXCLUDEFROMMRCHASE as string,\n\t\tEXCLUDEFROMPRRELATIONSHIP as string,\n\t\tDEA_NUMBER as string,\n\t\tLANGUAGE as string,\n\t\tClient_Provider_ID as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tCounty as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tSSN as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tLocation_Key as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string,\n\t\tProvider_Location_Effective_Date as string,\n\t\tProvider_Location_Termination_Date as string,\n\t\tUsage_Preference_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 select(mapColumn(\n\t\tPROVIDER_ID,\n\t\tTIN\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(Provider_Alternate_Identifier = PROVIDER_ID + TIN) ~> DerivedColumn1\nDerivedColumn1 sink(input(\n\t\tProvider_Alternate_Identifier as string,\n\t\tProvider_ID as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Alternate_Identifier,\n\t\tProvider_ID = PROVIDER_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_Load_Payers_Code",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tValue as string,\n\t\tDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tPayerCode_ID as string,\n\t\tPayerCode_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tPayerCode_ID = Value,\n\t\tPayerCode_Description = Description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Generate_Provider_Key')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Generate_Provider_Key",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow2",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_Language_Codes')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Language_Codes",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Language_Codes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"SinkLanguagecodes": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Language_Codes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_PlanCodes')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Load_planCode",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Load_PlanCodes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Load_PlanCodes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_ProductCodes')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Load_ProductCodes",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "LoadProductCodes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/LoadProductCodes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_SRC_PROVIDER')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LOAD_PROVIDER_DATA",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "LOAD_PROVIDER_DATA",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/LOAD_PROVIDER_DATA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PROVIDER_ATL_IDENTIFIER')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PRO_ATL_IDENTIFIER",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PRO_ALT_IDENT",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/PRO_ALT_IDENT')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/load_payers_code')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -51,48 +687,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/load_provider_data_1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "loadproviderdata1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow1",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow4')]"
+			]
 		}
 	]
 }
