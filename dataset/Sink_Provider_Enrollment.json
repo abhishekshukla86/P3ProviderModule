@@ -1,0 +1,54 @@
+{
+	"name": "Sink_Provider_Enrollment",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_Enrolment_Id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Provider_KEY",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Effective_Date",
+				"type": "date"
+			},
+			{
+				"name": "Provider_Termination_Date",
+				"type": "date"
+			},
+			{
+				"name": "Provider_Product_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_PayerCode",
+				"type": "varchar"
+			},
+			{
+				"name": "Board_Certification",
+				"type": "varchar"
+			},
+			{
+				"name": "Network_Flag",
+				"type": "char"
+			},
+			{
+				"name": "Provider_PanelCode",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Provider_Enrolment"
+		}
+	}
+}
