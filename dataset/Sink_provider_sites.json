@@ -1,0 +1,29 @@
+{
+	"name": "Sink_provider_sites",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_Site_Id",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Site_name",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_KEY",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Provider_Site"
+		}
+	}
+}
