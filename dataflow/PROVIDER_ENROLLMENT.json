@@ -1,0 +1,24 @@
+{
+	"name": "PROVIDER_ENROLLMENT",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SRC_PROVIDER_ENROLLMENT",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "providerenrollmentid"
+				}
+			],
+			"script": "source(output(\n\t\tPROVIDERKEY as string,\n\t\tPROVIDEREFFECTIVEDATE as string,\n\t\tPROVIDERTERMINATIONDATE as string,\n\t\tPAYERCODE as string,\n\t\tPRODUCTCODE as string,\n\t\tPLANCODE as string,\n\t\tBOARDCERTIFICATION as string,\n\t\tNETWORKFLAG as string,\n\t\tPROVIDERPANELCODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 keyGenerate(output(Provider_Enrollment_Id as long),\n\tstartAt: 1L) ~> providerenrollmentid"
+		}
+	}
+}
