@@ -216,7 +216,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "Provider"
+			"table": "Member_alternate_identifier"
 		}
 	}
 }
