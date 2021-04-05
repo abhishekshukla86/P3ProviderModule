@@ -1,0 +1,9 @@
+{
+	"name": "P3DATAFACTORYDEMO1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "73b0a648-ac62-4407-9d69-d9e95cd22567",
+		"tenantId": "cccb8831-9da6-4e4d-ae77-1b21f2908f5f"
+	}
+}
