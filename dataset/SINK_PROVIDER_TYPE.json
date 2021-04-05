@@ -1,0 +1,25 @@
+{
+	"name": "SINK_PROVIDER_TYPE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PROVIDER_MODEL_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_Type_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Type_Description",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "REF_ProviderType"
+		}
+	}
+}
