@@ -13,7 +13,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "P3MemberStaging_REF_DATA",
+						"referenceName": "Source_Model_Member",
 						"type": "DatasetReference"
 					},
 					"name": "source2"
