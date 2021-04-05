@@ -2,7 +2,7 @@
 	"name": "SRC_PROVIDER_DATA",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "SRC_P3_Module",
+			"referenceName": "Storage_p3_provider",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "SRC_Provider_2.csv",
-				"container": "providermodel"
+				"container": "p3provider"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
