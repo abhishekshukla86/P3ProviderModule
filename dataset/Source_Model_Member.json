@@ -2,7 +2,7 @@
 	"name": "Source_Model_Member",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Member_Model",
+			"referenceName": "AzureSqlDatabase3",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
