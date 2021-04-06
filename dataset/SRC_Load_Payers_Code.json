@@ -2,7 +2,7 @@
 	"name": "SRC_Load_Payers_Code",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "SRC_P3_Module",
+			"referenceName": "Azure_P3_Storage",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -12,7 +12,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "SRC_PayerCodes.xlsx",
-				"container": "providermodel"
+				"container": "p3provider"
 			},
 			"firstRowAsHeader": true
 		},
