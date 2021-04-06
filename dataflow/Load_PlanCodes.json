@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SRC_Plan_Codes",
+						"referenceName": "Source_PLAnCodes",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
