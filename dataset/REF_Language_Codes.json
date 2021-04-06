@@ -1,0 +1,25 @@
+{
+	"name": "REF_Language_Codes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PROVIDER_MODEL_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Language_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Language_Name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "REF_LanguageCodes"
+		}
+	}
+}
