@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SRC_Language_Codes",
+						"referenceName": "SRC_lang_Codes",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -15,14 +15,14 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "SinkLanguageCodes",
+						"referenceName": "Provider_Language_Codes_SINK",
 						"type": "DatasetReference"
 					},
 					"name": "SinkLanguagecodes"
 				}
 			],
 			"transformations": [],
-			"script": "source(output(\n\t\t{ISO 639-2 Code} as string,\n\t\t{English name of Language} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tLanguage_Code as string,\n\t\tLanguage_Name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tLanguage_Code = {ISO 639-2 Code},\n\t\tLanguage_Name = {English name of Language}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> SinkLanguagecodes"
+			"script": "source(output(\n\t\t{ISO 639-2 Code} as string,\n\t\t{English name of Language} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tProvider_KEY as string,\n\t\tProvider_Language_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tLanguage_Code = {ISO 639-2 Code},\n\t\tLanguage_Name = {English name of Language}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> SinkLanguagecodes"
 		}
 	}
 }
