@@ -19,7 +19,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "Provider_Language"
+			"table": "REF_LanguageCodes"
 		}
 	}
 }
