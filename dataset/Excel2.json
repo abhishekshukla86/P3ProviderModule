@@ -1,0 +1,30 @@
+{
+	"name": "Excel2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SRC_PROVIDER_STORAGE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SRC_PlanCodes.xlsx",
+				"container": "p3provider"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "PlanCode",
+				"type": "String"
+			},
+			{
+				"name": "PlanDescription",
+				"type": "String"
+			}
+		]
+	}
+}
