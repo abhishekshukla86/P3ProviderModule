@@ -1,0 +1,30 @@
+{
+	"name": "SRC_lang_Codes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SRC_PROVIDER_STORAGE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SRC_LanguageCodes_non_dupli.xlsx",
+				"container": "p3provider"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "ISO 639-2 Code",
+				"type": "String"
+			},
+			{
+				"name": "English name of Language",
+				"type": "String"
+			}
+		]
+	}
+}
