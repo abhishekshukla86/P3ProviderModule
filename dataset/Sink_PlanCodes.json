@@ -2,7 +2,7 @@
 	"name": "Sink_PlanCodes",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDatabase1",
+			"referenceName": "SInk_P3_Provider",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
