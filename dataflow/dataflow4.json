@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "SINK_payers_Code",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
