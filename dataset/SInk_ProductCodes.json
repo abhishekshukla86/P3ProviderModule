@@ -2,7 +2,7 @@
 	"name": "SInk_ProductCodes",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDatabase1",
+			"referenceName": "PROVIDER_MODEL_DB",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
