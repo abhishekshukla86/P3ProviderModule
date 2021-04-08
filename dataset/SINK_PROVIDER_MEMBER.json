@@ -1,0 +1,34 @@
+{
+	"name": "SINK_PROVIDER_MEMBER",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PROVIDER_MODEL_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_Site_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Provider_Site",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Site_name",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_KEY",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Provider_Site"
+		}
+	}
+}
