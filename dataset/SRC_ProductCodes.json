@@ -8,6 +8,7 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Product Codes",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "SRC_Product Codes_updated.xlsx",
