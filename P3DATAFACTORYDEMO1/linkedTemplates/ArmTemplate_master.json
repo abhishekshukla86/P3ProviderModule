@@ -1,0 +1,172 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "P3DATAFACTORYDEMO1"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase2'"
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase3'"
+		},
+		"Azure_P3_Storage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure_P3_Storage'"
+		},
+		"Member_Model_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Member_Model'"
+		},
+		"PROVIDER_MODEL_DB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PROVIDER_MODEL_DB'"
+		},
+		"SInk_P3_Provider_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SInk_P3_Provider'"
+		},
+		"SRC_P3_Module_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SRC_P3_Module'"
+		},
+		"SRC_PROVIDER_STORAGE_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SRC_PROVIDER_STORAGE'"
+		},
+		"Storage_p3_provider_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Storage_p3_provider'"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "P3DATAFACTORYDEMO1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
+					},
+					"AzureSqlDatabase2_connectionString": {
+						"value": "[parameters('AzureSqlDatabase2_connectionString')]"
+					},
+					"AzureSqlDatabase3_connectionString": {
+						"value": "[parameters('AzureSqlDatabase3_connectionString')]"
+					},
+					"Azure_P3_Storage_connectionString": {
+						"value": "[parameters('Azure_P3_Storage_connectionString')]"
+					},
+					"Member_Model_connectionString": {
+						"value": "[parameters('Member_Model_connectionString')]"
+					},
+					"PROVIDER_MODEL_DB_connectionString": {
+						"value": "[parameters('PROVIDER_MODEL_DB_connectionString')]"
+					},
+					"SInk_P3_Provider_connectionString": {
+						"value": "[parameters('SInk_P3_Provider_connectionString')]"
+					},
+					"SRC_P3_Module_connectionString": {
+						"value": "[parameters('SRC_P3_Module_connectionString')]"
+					},
+					"SRC_PROVIDER_STORAGE_connectionString": {
+						"value": "[parameters('SRC_PROVIDER_STORAGE_connectionString')]"
+					},
+					"Storage_p3_provider_connectionString": {
+						"value": "[parameters('Storage_p3_provider_connectionString')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "P3DATAFACTORYDEMO1_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'P3DATAFACTORYDEMO1_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "P3DATAFACTORYDEMO1_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'P3DATAFACTORYDEMO1_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "P3DATAFACTORYDEMO1_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'P3DATAFACTORYDEMO1_ArmTemplate_2')]"
+			]
+		}
+	]
+}

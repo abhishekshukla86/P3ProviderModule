@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "P3DATAFACTORYDEMO1"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"value": ""
+		},
+		"Azure_P3_Storage_connectionString": {
+			"value": ""
+		},
+		"Member_Model_connectionString": {
+			"value": ""
+		},
+		"PROVIDER_MODEL_DB_connectionString": {
+			"value": ""
+		},
+		"SInk_P3_Provider_connectionString": {
+			"value": ""
+		},
+		"SRC_P3_Module_connectionString": {
+			"value": ""
+		},
+		"SRC_PROVIDER_STORAGE_connectionString": {
+			"value": ""
+		},
+		"Storage_p3_provider_connectionString": {
+			"value": ""
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

@@ -1,0 +1,4742 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "P3DATAFACTORYDEMO1"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase2'"
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase3'"
+		},
+		"Azure_P3_Storage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure_P3_Storage'"
+		},
+		"Member_Model_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Member_Model'"
+		},
+		"PROVIDER_MODEL_DB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PROVIDER_MODEL_DB'"
+		},
+		"SInk_P3_Provider_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SInk_P3_Provider'"
+		},
+		"SRC_P3_Module_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SRC_P3_Module'"
+		},
+		"SRC_PROVIDER_STORAGE_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SRC_PROVIDER_STORAGE'"
+		},
+		"Storage_p3_provider_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Storage_p3_provider'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Generate_Provider_Key')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Generate_Provider_Key",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow2",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LOAD_PROVIDER_ENROLLMENT')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PROVIDER_ENROLLMENT",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PROVIDER_ENROLLMENT",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/PROVIDER_ENROLLMENT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_Language_Codes')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Language_Codes",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Language_Codes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Language_Codes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_PlanCodes')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Load_planCode",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Load_PlanCodes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Load_PlanCodes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_ProductCodes')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Load_ProductCodes",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "LoadProductCodes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/LoadProductCodes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_Provider_Sites')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "PROVIDER CHILD DATA - STEP 1",
+				"activities": [
+					{
+						"name": "PROVIDER_SITES",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "LOAD_PROVIDER_SITES",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"PROVIDER2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/LOAD_PROVIDER_SITES')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_Provider_Type_Code')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LOAD PROVIDER TYPE CODE",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "LOAD_PROVIDER_TYPE_CODE",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/LOAD_PROVIDER_TYPE_CODE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_SRC_PROVIDER')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LOAD_PROVIDER_DATA",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "LOAD_PROVIDER_DATA",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/LOAD_PROVIDER_DATA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PROVIDER_ATL_IDENTIFIER')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PRO_ATL_IDENTIFIER",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PRO_ALT_IDENT",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/PRO_ALT_IDENT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_payers_code')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "load_payers_code",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow4",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PayerCode_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "PayerCode_Description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_PayerCodes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "UPIN",
+						"type": "varchar"
+					},
+					{
+						"name": "Full_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Name_Prefix",
+						"type": "char"
+					},
+					{
+						"name": "First_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Middle_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Professional_Suffix",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "char"
+					},
+					{
+						"name": "Company_Name",
+						"type": "char"
+					},
+					{
+						"name": "Email_Address",
+						"type": "char"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Address_Line_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Address_Line_2",
+						"type": "varchar"
+					},
+					{
+						"name": "City",
+						"type": "varchar"
+					},
+					{
+						"name": "County",
+						"type": "char"
+					},
+					{
+						"name": "State_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Zip",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "char"
+					},
+					{
+						"name": "Location_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "date"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "date"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "char"
+					},
+					{
+						"name": "NPI",
+						"type": "varchar"
+					},
+					{
+						"name": "DEA_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "TIN",
+						"type": "char"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "varchar"
+					},
+					{
+						"name": "SSN",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Effective_Date",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Termination_Date",
+						"type": "char"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "char"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Primary_Language_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Location_Key",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_MR_Chase",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_PR_Relationship",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "char"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "UPIN",
+						"type": "varchar"
+					},
+					{
+						"name": "Full_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Name_Prefix",
+						"type": "char"
+					},
+					{
+						"name": "First_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Middle_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Professional_Suffix",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "char"
+					},
+					{
+						"name": "Company_Name",
+						"type": "char"
+					},
+					{
+						"name": "Email_Address",
+						"type": "char"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Address_Line_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Address_Line_2",
+						"type": "varchar"
+					},
+					{
+						"name": "City",
+						"type": "varchar"
+					},
+					{
+						"name": "County",
+						"type": "char"
+					},
+					{
+						"name": "State_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Zip",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "char"
+					},
+					{
+						"name": "Location_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "date"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "date"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "char"
+					},
+					{
+						"name": "NPI",
+						"type": "varchar"
+					},
+					{
+						"name": "DEA_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "TIN",
+						"type": "char"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "varchar"
+					},
+					{
+						"name": "SSN",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Effective_Date",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Termination_Date",
+						"type": "char"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "char"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Primary_Language_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Location_Key",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_MR_Chase",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_PR_Relationship",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "char"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider_Alternate_Identifier"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PROVIDER_MODEL_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_Alternate_Identifier",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider_Alternate_Identifier"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PROVIDER_MODEL_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PROVIDER_MODEL_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "UPIN",
+						"type": "varchar"
+					},
+					{
+						"name": "Full_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Name_Prefix",
+						"type": "char"
+					},
+					{
+						"name": "First_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Middle_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Professional_Suffix",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "char"
+					},
+					{
+						"name": "Company_Name",
+						"type": "char"
+					},
+					{
+						"name": "Email_Address",
+						"type": "char"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Address_Line_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Address_Line_2",
+						"type": "varchar"
+					},
+					{
+						"name": "City",
+						"type": "varchar"
+					},
+					{
+						"name": "County",
+						"type": "char"
+					},
+					{
+						"name": "State_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Zip",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "char"
+					},
+					{
+						"name": "Location_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "date"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "date"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "char"
+					},
+					{
+						"name": "NPI",
+						"type": "varchar"
+					},
+					{
+						"name": "DEA_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "TIN",
+						"type": "char"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "varchar"
+					},
+					{
+						"name": "SSN",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Effective_Date",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Termination_Date",
+						"type": "char"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "char"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Primary_Language_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Location_Key",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_MR_Chase",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_PR_Relationship",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "char"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "PRIMARY_SITE_FLAG",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_SPECIALTY_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "SPECIALTY_DESC",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_TYPE",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PROVIDER_MODEL_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable6')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PROVIDER_MODEL_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "UPIN",
+						"type": "varchar"
+					},
+					{
+						"name": "Full_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Name_Prefix",
+						"type": "char"
+					},
+					{
+						"name": "First_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Middle_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Professional_Suffix",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "char"
+					},
+					{
+						"name": "Company_Name",
+						"type": "char"
+					},
+					{
+						"name": "Email_Address",
+						"type": "char"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Address_Line_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Address_Line_2",
+						"type": "varchar"
+					},
+					{
+						"name": "City",
+						"type": "varchar"
+					},
+					{
+						"name": "County",
+						"type": "char"
+					},
+					{
+						"name": "State_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Zip",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "char"
+					},
+					{
+						"name": "Location_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "date"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "date"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "char"
+					},
+					{
+						"name": "NPI",
+						"type": "varchar"
+					},
+					{
+						"name": "DEA_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "TIN",
+						"type": "char"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "varchar"
+					},
+					{
+						"name": "SSN",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Effective_Date",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Termination_Date",
+						"type": "char"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "char"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Primary_Language_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Location_Key",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_MR_Chase",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_PR_Relationship",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "char"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "PRIMARY_SITE_FLAG",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_SPECIALTY_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "SPECIALTY_DESC",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_TYPE",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PROVIDER_MODEL_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_Provider_2.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PROVIDER_ID",
+						"type": "String"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "UPIN",
+						"type": "String"
+					},
+					{
+						"name": "NPI",
+						"type": "String"
+					},
+					{
+						"name": "TIN",
+						"type": "String"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "String"
+					},
+					{
+						"name": "FIRST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "MIDDLE_NAME",
+						"type": "String"
+					},
+					{
+						"name": "LAST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_PREFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_SUFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS1",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS2",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_CITY",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_STATE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ZIP",
+						"type": "String"
+					},
+					{
+						"name": "PHONE",
+						"type": "String"
+					},
+					{
+						"name": "FAX",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMMRCHASE",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMPRRELATIONSHIP",
+						"type": "String"
+					},
+					{
+						"name": "DEA_NUMBER",
+						"type": "String"
+					},
+					{
+						"name": "LANGUAGE",
+						"type": "String"
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company_Name",
+						"type": "String"
+					},
+					{
+						"name": "Email_Address",
+						"type": "String"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "County",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "String"
+					},
+					{
+						"name": "Location_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "String"
+					},
+					{
+						"name": "SSN",
+						"type": "String"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "String"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "String"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Key",
+						"type": "String"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "String"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "String"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_SpecialityTaxonomyCodes.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Speciality_KEY",
+						"type": "String"
+					},
+					{
+						"name": "CMS SPECIALTY CODE",
+						"type": "String"
+					},
+					{
+						"name": "CMS SPECIALTY DESCRIPTION",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER TAXONOMY CODE",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER TAXONOMY DESCRIPTION TYPE",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION",
+						"type": "String"
+					},
+					{
+						"name": "RBI DATA SPECIALITY CODE",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER TYPE",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Storage_p3_provider",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_Provider_2.csv",
+						"container": "p3provider"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PROVIDER_ID",
+						"type": "String"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "UPIN",
+						"type": "String"
+					},
+					{
+						"name": "NPI",
+						"type": "String"
+					},
+					{
+						"name": "TIN",
+						"type": "String"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "String"
+					},
+					{
+						"name": "FIRST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "MIDDLE_NAME",
+						"type": "String"
+					},
+					{
+						"name": "LAST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_PREFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_SUFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "String"
+					},
+					{
+						"name": "SITE_ID",
+						"type": "String"
+					},
+					{
+						"name": "SITE_NAME",
+						"type": "String"
+					},
+					{
+						"name": "PRIMARY_SITE_FLAG",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_SPECIALTY_ID",
+						"type": "String"
+					},
+					{
+						"name": "SPECIALTY_DESC",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS1",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS2",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_CITY",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_STATE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ZIP",
+						"type": "String"
+					},
+					{
+						"name": "MAILING_ADDRESS1",
+						"type": "String"
+					},
+					{
+						"name": "MAILING_ADDRESS2",
+						"type": "String"
+					},
+					{
+						"name": "MAILING_CITY",
+						"type": "String"
+					},
+					{
+						"name": "MAILING_STATE",
+						"type": "String"
+					},
+					{
+						"name": "MAILING_ZIP",
+						"type": "String"
+					},
+					{
+						"name": "PHONE",
+						"type": "String"
+					},
+					{
+						"name": "FAX",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMMRCHASE",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMPRRELATIONSHIP",
+						"type": "String"
+					},
+					{
+						"name": "SITE_TYPE",
+						"type": "String"
+					},
+					{
+						"name": "DEA_NUMBER",
+						"type": "String"
+					},
+					{
+						"name": "LANGUAGE",
+						"type": "String"
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company_Name",
+						"type": "String"
+					},
+					{
+						"name": "Email_Address",
+						"type": "String"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "County",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "String"
+					},
+					{
+						"name": "Location_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "String"
+					},
+					{
+						"name": "SSN",
+						"type": "String"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "String"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "String"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Key",
+						"type": "String"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "String"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "String"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Storage_p3_provider')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_PlanCodes.xlsx",
+						"container": "providermodel"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "PlanCode",
+						"type": "String"
+					},
+					{
+						"name": "PlanDescription",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_PROVIDER_STORAGE",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_PlanCodes.xlsx",
+						"container": "p3provider"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "PlanCode",
+						"type": "String"
+					},
+					{
+						"name": "PlanDescription",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_PROVIDER_STORAGE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/P3MemberStaging_REF_DATA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Ref_Data_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Ref_Table",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref_Field",
+						"type": "varchar"
+					},
+					{
+						"name": "Reference_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Reference_Code_Description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_Data"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PROVIDER_1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_Provider_2.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PROVIDER_ID",
+						"type": "String"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "UPIN",
+						"type": "String"
+					},
+					{
+						"name": "NPI",
+						"type": "String"
+					},
+					{
+						"name": "TIN",
+						"type": "String"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "String"
+					},
+					{
+						"name": "FIRST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "MIDDLE_NAME",
+						"type": "String"
+					},
+					{
+						"name": "LAST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_PREFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_SUFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS1",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS2",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_CITY",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_STATE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ZIP",
+						"type": "String"
+					},
+					{
+						"name": "PHONE",
+						"type": "String"
+					},
+					{
+						"name": "FAX",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMMRCHASE",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMPRRELATIONSHIP",
+						"type": "String"
+					},
+					{
+						"name": "DEA_NUMBER",
+						"type": "String"
+					},
+					{
+						"name": "LANGUAGE",
+						"type": "String"
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company_Name",
+						"type": "String"
+					},
+					{
+						"name": "Email_Address",
+						"type": "String"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "County",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "String"
+					},
+					{
+						"name": "Location_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "String"
+					},
+					{
+						"name": "SSN",
+						"type": "String"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "String"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "String"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Key",
+						"type": "String"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "String"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "String"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PROVIDER_SINK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PROVIDER_MODEL_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "UPIN",
+						"type": "varchar"
+					},
+					{
+						"name": "Full_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Name_Prefix",
+						"type": "char"
+					},
+					{
+						"name": "First_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Middle_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Professional_Suffix",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "char"
+					},
+					{
+						"name": "Company_Name",
+						"type": "char"
+					},
+					{
+						"name": "Email_Address",
+						"type": "char"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Address_Line_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Address_Line_2",
+						"type": "varchar"
+					},
+					{
+						"name": "City",
+						"type": "varchar"
+					},
+					{
+						"name": "County",
+						"type": "char"
+					},
+					{
+						"name": "State_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Zip",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "char"
+					},
+					{
+						"name": "Location_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "date"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "date"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "char"
+					},
+					{
+						"name": "NPI",
+						"type": "varchar"
+					},
+					{
+						"name": "DEA_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "TIN",
+						"type": "char"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "varchar"
+					},
+					{
+						"name": "SSN",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Effective_Date",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Termination_Date",
+						"type": "char"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "char"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Primary_Language_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Location_Key",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_MR_Chase",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_PR_Relationship",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "char"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "PRIMARY_SITE_FLAG",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_SPECIALTY_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "SPECIALTY_DESC",
+						"type": "varchar"
+					},
+					{
+						"name": "SITE_TYPE",
+						"type": "varchar"
+					},
+					{
+						"name": "MAILING_ADDRESS1",
+						"type": "varchar"
+					},
+					{
+						"name": "MAILING_ADDRESS2",
+						"type": "varchar"
+					},
+					{
+						"name": "MAILING_CITY",
+						"type": "varchar"
+					},
+					{
+						"name": "MAILING_STATE",
+						"type": "varchar"
+					},
+					{
+						"name": "MAILING_ZIP",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PROVIDER_MODEL_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Provider_Language_Codes_SINK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PROVIDER_MODEL_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_KEY",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_Language_Code",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_LanguageCodes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PROVIDER_MODEL_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_Language_Codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PROVIDER_MODEL_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Language_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Language_Name",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_LanguageCodes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PROVIDER_MODEL_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SINK_PROVIDER_TYPE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PROVIDER_MODEL_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_Type_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_Type_Description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_ProviderType"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PROVIDER_MODEL_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SINK_payers_Code')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PROVIDER_MODEL_DB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PayerCode_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "PayerCode_Description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_PayerCodes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PROVIDER_MODEL_DB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SInk_ProductCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Product_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Product_Code_Description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_ProductCodes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_Language_Codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_LanguageCodes_non_dupli.xlsx",
+						"container": "providermodel"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ISO 639-2 Code",
+						"type": "String"
+					},
+					{
+						"name": "English name of Language",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_Load_Payers_Code')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_P3_Storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_PayerCodes.xlsx",
+						"container": "p3provider"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Value",
+						"type": "String"
+					},
+					{
+						"name": "Description",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_P3_Storage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_PROVIDER_DATA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Storage_p3_provider",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_Provider_2.csv",
+						"container": "p3provider"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PROVIDER_ID",
+						"type": "String"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "UPIN",
+						"type": "String"
+					},
+					{
+						"name": "NPI",
+						"type": "String"
+					},
+					{
+						"name": "TIN",
+						"type": "String"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "String"
+					},
+					{
+						"name": "FIRST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "MIDDLE_NAME",
+						"type": "String"
+					},
+					{
+						"name": "LAST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_PREFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_SUFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS1",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS2",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_CITY",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_STATE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ZIP",
+						"type": "String"
+					},
+					{
+						"name": "PHONE",
+						"type": "String"
+					},
+					{
+						"name": "FAX",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMMRCHASE",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMPRRELATIONSHIP",
+						"type": "String"
+					},
+					{
+						"name": "DEA_NUMBER",
+						"type": "String"
+					},
+					{
+						"name": "LANGUAGE",
+						"type": "String"
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company_Name",
+						"type": "String"
+					},
+					{
+						"name": "Email_Address",
+						"type": "String"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "County",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "String"
+					},
+					{
+						"name": "Location_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "String"
+					},
+					{
+						"name": "SSN",
+						"type": "String"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "String"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "String"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Key",
+						"type": "String"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "String"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "String"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Storage_p3_provider')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_PROVIDER_ENROLLMENT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_Provider_Enrollment.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PROVIDERKEY",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDEREFFECTIVEDATE",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDERTERMINATIONDATE",
+						"type": "String"
+					},
+					{
+						"name": "PAYERCODE",
+						"type": "String"
+					},
+					{
+						"name": "PRODUCTCODE",
+						"type": "String"
+					},
+					{
+						"name": "PLANCODE",
+						"type": "String"
+					},
+					{
+						"name": "BOARDCERTIFICATION",
+						"type": "String"
+					},
+					{
+						"name": "NETWORKFLAG",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDERPANELCODE",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_PROVIDER_TYPE_CODE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_PROVIDER_STORAGE",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_ProviderTypeCode.csv",
+						"container": "p3provider"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Code",
+						"type": "String"
+					},
+					{
+						"name": "Description",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_PROVIDER_STORAGE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_Plan_Codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_PROVIDER_STORAGE",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_PlanCodes.xlsx",
+						"container": "p3provider"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_PROVIDER_STORAGE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_ProductCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Product Codes",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_Product Codes_updated.xlsx",
+						"container": "providermodel"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "PRODUCT CODE",
+						"type": "String"
+					},
+					{
+						"name": "DESCRIPTION",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_Provider')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_Provider_2.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PROVIDER_ID",
+						"type": "String"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "UPIN",
+						"type": "String"
+					},
+					{
+						"name": "NPI",
+						"type": "String"
+					},
+					{
+						"name": "TIN",
+						"type": "String"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "String"
+					},
+					{
+						"name": "FIRST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "MIDDLE_NAME",
+						"type": "String"
+					},
+					{
+						"name": "LAST_NAME",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_PREFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_NAME_SUFIX",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS1",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ADDRESS2",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_CITY",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_STATE",
+						"type": "String"
+					},
+					{
+						"name": "PHYSICAL_ZIP",
+						"type": "String"
+					},
+					{
+						"name": "PHONE",
+						"type": "String"
+					},
+					{
+						"name": "FAX",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMMRCHASE",
+						"type": "String"
+					},
+					{
+						"name": "EXCLUDEFROMPRRELATIONSHIP",
+						"type": "String"
+					},
+					{
+						"name": "DEA_NUMBER",
+						"type": "String"
+					},
+					{
+						"name": "LANGUAGE",
+						"type": "String"
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company_Name",
+						"type": "String"
+					},
+					{
+						"name": "Email_Address",
+						"type": "String"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "County",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "String"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "String"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "String"
+					},
+					{
+						"name": "Location_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "String"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "String"
+					},
+					{
+						"name": "SSN",
+						"type": "String"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "String"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "String"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location_Key",
+						"type": "String"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "String"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "String"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "String"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_SpecialityTaxonomyCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_SpecialityTaxonomyCodes.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Speciality_KEY",
+						"type": "String"
+					},
+					{
+						"name": "CMS SPECIALTY CODE",
+						"type": "String"
+					},
+					{
+						"name": "CMS SPECIALTY DESCRIPTION",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER TAXONOMY CODE",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER TAXONOMY DESCRIPTION TYPE",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION",
+						"type": "String"
+					},
+					{
+						"name": "RBI DATA SPECIALITY CODE",
+						"type": "String"
+					},
+					{
+						"name": "PROVIDER TYPE",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_lang_Codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_PROVIDER_STORAGE",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_LanguageCodes_non_dupli.xlsx",
+						"container": "p3provider"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ISO 639-2 Code",
+						"type": "String"
+					},
+					{
+						"name": "English name of Language",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_PROVIDER_STORAGE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SinkLanguageCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Language_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Language_Name",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_LanguageCodes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink_PlanCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SInk_P3_Provider",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Plan_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Plan_Code_description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_PlanCodes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SInk_P3_Provider')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink_Pro_alt_identifier')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_Alternate_Identifier",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider_Alternate_Identifier"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink_Provider_Alternate_Identifier')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_Alternate_Identifier",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider_Alternate_Identifier"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink_Provider_Enrollment')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_Enrolment_Id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Provider_KEY",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_Effective_Date",
+						"type": "date"
+					},
+					{
+						"name": "Provider_Termination_Date",
+						"type": "date"
+					},
+					{
+						"name": "Provider_Product_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_PayerCode",
+						"type": "varchar"
+					},
+					{
+						"name": "Board_Certification",
+						"type": "varchar"
+					},
+					{
+						"name": "Network_Flag",
+						"type": "char"
+					},
+					{
+						"name": "Provider_PanelCode",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider_Enrolment"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink_STG_ProviderTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Client_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CMS_Provider_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "UPIN",
+						"type": "varchar"
+					},
+					{
+						"name": "Full_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Name_Prefix",
+						"type": "char"
+					},
+					{
+						"name": "First_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Middle_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Professional_Suffix",
+						"type": "char"
+					},
+					{
+						"name": "PROVIDER_TITLE",
+						"type": "char"
+					},
+					{
+						"name": "Company_Name",
+						"type": "char"
+					},
+					{
+						"name": "Email_Address",
+						"type": "char"
+					},
+					{
+						"name": "Email_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Address_Line_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Address_Line_2",
+						"type": "varchar"
+					},
+					{
+						"name": "City",
+						"type": "varchar"
+					},
+					{
+						"name": "County",
+						"type": "char"
+					},
+					{
+						"name": "State_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Zip",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_2",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_1",
+						"type": "varchar"
+					},
+					{
+						"name": "Fax_Number_2",
+						"type": "char"
+					},
+					{
+						"name": "Fax_Number_3",
+						"type": "char"
+					},
+					{
+						"name": "Client_Location_ID",
+						"type": "char"
+					},
+					{
+						"name": "Location_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Usage_Type_Code",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Full_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_First_Name",
+						"type": "char"
+					},
+					{
+						"name": "Location_Contact_Last_Name",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Location_Effective_Date",
+						"type": "date"
+					},
+					{
+						"name": "Provider_Location_Termination_Date",
+						"type": "date"
+					},
+					{
+						"name": "Usage_Preference_Code",
+						"type": "char"
+					},
+					{
+						"name": "NPI",
+						"type": "varchar"
+					},
+					{
+						"name": "DEA_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "TIN",
+						"type": "char"
+					},
+					{
+						"name": "TIMELY_FILING_LIMIT",
+						"type": "varchar"
+					},
+					{
+						"name": "SSN",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Effective_Date",
+						"type": "char"
+					},
+					{
+						"name": "Provider_Termination_Date",
+						"type": "char"
+					},
+					{
+						"name": "Network_Ind",
+						"type": "char"
+					},
+					{
+						"name": "Facility_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Management_Group_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Primary_Language_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Location_Key",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_MR_Chase",
+						"type": "varchar"
+					},
+					{
+						"name": "Exclude_From_PR_Relationship",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_System_Of_Record",
+						"type": "char"
+					},
+					{
+						"name": "Medicare_Facility_Number",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink_load_provider_type1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_Type_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_Type_Description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_ProviderType"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink_provider_sites')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Provider_Site_Id",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_Site_name",
+						"type": "varchar"
+					},
+					{
+						"name": "Provider_KEY",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Provider_Site"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Source_Model_Member')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Ref_Data_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Ref_Table",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref_Field",
+						"type": "varchar"
+					},
+					{
+						"name": "Reference_Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Reference_Code_Description",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "REF_Data"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Source_PLAnCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_PROVIDER_STORAGE",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_PlanCodes.xlsx",
+						"container": "p3provider"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_PROVIDER_STORAGE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_provider_data1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_ProviderTypeCode.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Code",
+						"type": "String"
+					},
+					{
+						"name": "Description",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/load_provider_data_1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SRC_P3_Module",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SRC_ProviderTypeCode.csv",
+						"container": "providermodel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Code",
+						"type": "String"
+					},
+					{
+						"name": "Description",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SRC_P3_Module')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase3_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Azure_P3_Storage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('Azure_P3_Storage_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Member_Model')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('Member_Model_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PROVIDER_MODEL_DB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('PROVIDER_MODEL_DB_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SInk_P3_Provider')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('SInk_P3_Provider_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_P3_Module')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('SRC_P3_Module_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRC_PROVIDER_STORAGE')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('SRC_PROVIDER_STORAGE_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Storage_p3_provider')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('Storage_p3_provider_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LOAD_PROVIDER_DATA')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_PROVIDER_DATA",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "Source_Model_Member",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "PROVIDER_SINK",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Lookup1"
+						},
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tPROVIDER_ID as integer,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tNPI as long,\n\t\tTIN as integer,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tFIRST_NAME as string,\n\t\tMIDDLE_NAME as string,\n\t\tLAST_NAME as string,\n\t\tPROVIDER_NAME_PREFIX as string,\n\t\tPROVIDER_NAME_SUFIX as string,\n\t\tPROVIDER_TITLE as string,\n\t\tSITE_ID as string,\n\t\tSITE_NAME as string,\n\t\tPRIMARY_SITE_FLAG as string,\n\t\tPROVIDER_SPECIALTY_ID as string,\n\t\tSPECIALTY_DESC as string,\n\t\tPHYSICAL_ADDRESS1 as string,\n\t\tPHYSICAL_ADDRESS2 as string,\n\t\tPHYSICAL_CITY as string,\n\t\tPHYSICAL_STATE as string,\n\t\tPHYSICAL_ZIP as integer,\n\t\tMAILING_ADDRESS1 as string,\n\t\tMAILING_ADDRESS2 as string,\n\t\tMAILING_CITY as string,\n\t\tMAILING_STATE as string,\n\t\tMAILING_ZIP as string,\n\t\tPHONE as string,\n\t\tFAX as string,\n\t\tEXCLUDEFROMMRCHASE as string,\n\t\tEXCLUDEFROMPRRELATIONSHIP as string,\n\t\tSITE_TYPE as string,\n\t\tDEA_NUMBER as string,\n\t\tLANGUAGE as string,\n\t\tClient_Provider_ID as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tCounty as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tSSN as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tLocation_Key as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string,\n\t\tProvider_Location_Effective_Date as date 'MM/dd/yyyy',\n\t\tProvider_Location_Termination_Date as date 'MM/dd/yyyy',\n\t\tUsage_Preference_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tRef_Data_ID as integer,\n\t\tRef_Table as string,\n\t\tRef_Field as string,\n\t\tReference_Code as string,\n\t\tReference_Code_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nDerivedColumn1, source2 lookup(LANGUAGE == Reference_Code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup1\nsource1 derive(FULL_NAME = FIRST_NAME+ ' ' + MIDDLE_NAME + LAST_NAME) ~> DerivedColumn1\nLookup1 sink(input(\n\t\tProvider_ID as integer,\n\t\tClient_Provider_ID as string,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tFull_Name as string,\n\t\tName_Prefix as string,\n\t\tFirst_Name as string,\n\t\tMiddle_Name as string,\n\t\tLast_Name as string,\n\t\tProfessional_Suffix as string,\n\t\tPROVIDER_TITLE as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tAddress_Line_1 as string,\n\t\tAddress_Line_2 as string,\n\t\tCity as string,\n\t\tCounty as string,\n\t\tState_Code as string,\n\t\tZip as string,\n\t\tPhone_Number_1 as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_1 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tProvider_Location_Effective_Date as date,\n\t\tProvider_Location_Termination_Date as date,\n\t\tUsage_Preference_Code as string,\n\t\tNPI as string,\n\t\tDEA_Number as string,\n\t\tTIN as string,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tSSN as string,\n\t\tProvider_Effective_Date as string,\n\t\tProvider_Termination_Date as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tPrimary_Language_Code as string,\n\t\tLocation_Key as string,\n\t\tExclude_From_MR_Chase as string,\n\t\tExclude_From_PR_Relationship as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string,\n\t\tSITE_ID as string,\n\t\tSITE_NAME as string,\n\t\tPRIMARY_SITE_FLAG as string,\n\t\tPROVIDER_SPECIALTY_ID as string,\n\t\tSPECIALTY_DESC as string,\n\t\tSITE_TYPE as string,\n\t\tMAILING_ADDRESS1 as string,\n\t\tMAILING_ADDRESS2 as string,\n\t\tMAILING_CITY as string,\n\t\tMAILING_STATE as string,\n\t\tMAILING_ZIP as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_ID = PROVIDER_ID,\n\t\tCMS_Provider_ID,\n\t\tUPIN,\n\t\tNPI,\n\t\tTIN,\n\t\tTIMELY_FILING_LIMIT,\n\t\tFirst_Name = FIRST_NAME,\n\t\tMiddle_Name = MIDDLE_NAME,\n\t\tLast_Name = LAST_NAME,\n\t\tFull_Name = FULL_NAME,\n\t\tName_Prefix = PROVIDER_NAME_PREFIX,\n\t\tProfessional_Suffix = PROVIDER_NAME_SUFIX,\n\t\tPROVIDER_TITLE,\n\t\tSITE_ID,\n\t\tSITE_NAME,\n\t\tPRIMARY_SITE_FLAG,\n\t\tPROVIDER_SPECIALTY_ID,\n\t\tSPECIALTY_DESC,\n\t\tAddress_Line_1 = PHYSICAL_ADDRESS1,\n\t\tAddress_Line_2 = PHYSICAL_ADDRESS2,\n\t\tCity = PHYSICAL_CITY,\n\t\tState_Code = PHYSICAL_STATE,\n\t\tZip = PHYSICAL_ZIP,\n\t\tMAILING_ADDRESS1,\n\t\tMAILING_ADDRESS2,\n\t\tMAILING_CITY,\n\t\tMAILING_STATE,\n\t\tMAILING_ZIP,\n\t\tPhone_Number_1 = PHONE,\n\t\tFax_Number_1 = FAX,\n\t\tExclude_From_MR_Chase = EXCLUDEFROMMRCHASE,\n\t\tExclude_From_PR_Relationship = EXCLUDEFROMPRRELATIONSHIP,\n\t\tSITE_TYPE,\n\t\tDEA_Number = DEA_NUMBER,\n\t\tPrimary_Language_Code = LANGUAGE,\n\t\tClient_Provider_ID,\n\t\tCompany_Name,\n\t\tEmail_Address,\n\t\tEmail_Usage_Type_Code,\n\t\tCounty,\n\t\tPhone_Number_2,\n\t\tPhone_Number_3,\n\t\tFax_Number_2,\n\t\tFax_Number_3,\n\t\tClient_Location_ID,\n\t\tLocation_Name,\n\t\tLocation_Usage_Type_Code,\n\t\tLocation_Contact_Full_Name,\n\t\tLocation_Contact_First_Name,\n\t\tLocation_Contact_Last_Name,\n\t\tSSN,\n\t\tNetwork_Ind,\n\t\tFacility_Code,\n\t\tManagement_Group_Code,\n\t\tLocation_Key,\n\t\tSource_System_Of_Record,\n\t\tMedicare_Facility_Number,\n\t\tProvider_Location_Effective_Date,\n\t\tProvider_Location_Termination_Date,\n\t\tUsage_Preference_Code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SRC_PROVIDER_DATA')]",
+				"[concat(variables('factoryId'), '/datasets/Source_Model_Member')]",
+				"[concat(variables('factoryId'), '/datasets/PROVIDER_SINK')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LOAD_PROVIDER_SITES')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "PROVIDER_1",
+								"type": "DatasetReference"
+							},
+							"name": "PROVIDER2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_provider_sites",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tPROVIDER_ID as string,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tNPI as string,\n\t\tTIN as string,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tFIRST_NAME as string,\n\t\tMIDDLE_NAME as string,\n\t\tLAST_NAME as string,\n\t\tPROVIDER_NAME_PREFIX as string,\n\t\tPROVIDER_NAME_SUFIX as string,\n\t\tPROVIDER_TITLE as string,\n\t\tPHYSICAL_ADDRESS1 as string,\n\t\tPHYSICAL_ADDRESS2 as string,\n\t\tPHYSICAL_CITY as string,\n\t\tPHYSICAL_STATE as string,\n\t\tPHYSICAL_ZIP as string,\n\t\tPHONE as string,\n\t\tFAX as string,\n\t\tEXCLUDEFROMMRCHASE as string,\n\t\tEXCLUDEFROMPRRELATIONSHIP as string,\n\t\tDEA_NUMBER as string,\n\t\tLANGUAGE as string,\n\t\tClient_Provider_ID as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tCounty as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tSSN as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tLocation_Key as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string,\n\t\tProvider_Location_Effective_Date as string,\n\t\tProvider_Location_Termination_Date as string,\n\t\tUsage_Preference_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> PROVIDER2\nPROVIDER2 sink(input(\n\t\tProvider_Site_Id as string,\n\t\tProvider_Site_name as string,\n\t\tProvider_KEY as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PROVIDER_1')]",
+				"[concat(variables('factoryId'), '/datasets/Sink_provider_sites')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LOAD_PROVIDER_TYPE_CODE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_PROVIDER_TYPE_CODE",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SINK_PROVIDER_TYPE",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tCode as string,\n\t\tDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tProvider_Type_Code as string,\n\t\tProvider_Type_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Type_Code = Code,\n\t\tProvider_Type_Description = Description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SRC_PROVIDER_TYPE_CODE')]",
+				"[concat(variables('factoryId'), '/datasets/SINK_PROVIDER_TYPE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Language_Codes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_lang_Codes",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "REF_Language_Codes",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\t{ISO 639-2 Code} as string,\n\t\t{English name of Language} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tLanguage_Code as string,\n\t\tLanguage_Name as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tLanguage_Code = {ISO 639-2 Code},\n\t\tLanguage_Name = {English name of Language}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SRC_lang_Codes')]",
+				"[concat(variables('factoryId'), '/datasets/REF_Language_Codes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LoadProductCodes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_ProductCodes",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SInk_ProductCodes",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\t{PRODUCT CODE} as string,\n\t\tDESCRIPTION as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tProduct_Code as string,\n\t\tProduct_Code_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProduct_Code = {PRODUCT CODE},\n\t\tProduct_Code_Description = DESCRIPTION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SRC_ProductCodes')]",
+				"[concat(variables('factoryId'), '/datasets/SInk_ProductCodes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_PlanCodes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Excel2",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_PlanCodes",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tPlanCode as string,\n\t\tPlanDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tPlan_Code as string,\n\t\tPlan_Code_description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tPlan_Code = PlanCode,\n\t\tPlan_Code_description = PlanDescription\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Excel2')]",
+				"[concat(variables('factoryId'), '/datasets/Sink_PlanCodes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PROVIDER_ENROLLMENT')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_PROVIDER_ENROLLMENT",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable3",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_Provider_Enrollment",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Lookup1"
+						},
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tPROVIDERKEY as integer,\n\t\tPROVIDEREFFECTIVEDATE as date 'MM/dd/yyyy',\n\t\tPROVIDERTERMINATIONDATE as date 'MM/dd/yyyy',\n\t\tPAYERCODE as string,\n\t\tPRODUCTCODE as string,\n\t\tPLANCODE as string,\n\t\tBOARDCERTIFICATION as string,\n\t\tNETWORKFLAG as string,\n\t\tPROVIDERPANELCODE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tProvider_Alternate_Identifier as string,\n\t\tProvider_ID as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource1, DerivedColumn1 lookup(PROVIDERKEY == Provider_Alternate_Identifier,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup1\nsource2 derive(Provider_Alternate_Identifier = toInteger(Provider_Alternate_Identifier)) ~> DerivedColumn1\nLookup1 sink(input(\n\t\tProvider_Enrolment_Id as integer,\n\t\tProvider_KEY as string,\n\t\tProvider_Effective_Date as date,\n\t\tProvider_Termination_Date as date,\n\t\tProvider_Product_Code as string,\n\t\tProvider_PayerCode as string,\n\t\tBoard_Certification as string,\n\t\tNetwork_Flag as string,\n\t\tProvider_PanelCode as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Enrolment_Id = Provider_Alternate_Identifier,\n\t\tProvider_KEY = Provider_ID,\n\t\tProvider_Effective_Date = PROVIDEREFFECTIVEDATE,\n\t\tProvider_Termination_Date = PROVIDERTERMINATIONDATE,\n\t\tProvider_Product_Code = PRODUCTCODE,\n\t\tProvider_PayerCode = PAYERCODE,\n\t\tBoard_Certification = BOARDCERTIFICATION,\n\t\tNetwork_Flag = NETWORKFLAG,\n\t\tProvider_PanelCode = PROVIDERPANELCODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SRC_PROVIDER_ENROLLMENT')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable3')]",
+				"[concat(variables('factoryId'), '/datasets/Sink_Provider_Enrollment')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PRO_ALT_IDENT')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText3",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable4",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Select1"
+						}
+					],
+					"script": "source(output(\n\t\tPROVIDER_ID as string,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tNPI as string,\n\t\tTIN as string,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tFIRST_NAME as string,\n\t\tMIDDLE_NAME as string,\n\t\tLAST_NAME as string,\n\t\tPROVIDER_NAME_PREFIX as string,\n\t\tPROVIDER_NAME_SUFIX as string,\n\t\tPROVIDER_TITLE as string,\n\t\tSITE_ID as string,\n\t\tSITE_NAME as string,\n\t\tPRIMARY_SITE_FLAG as string,\n\t\tPROVIDER_SPECIALTY_ID as string,\n\t\tSPECIALTY_DESC as string,\n\t\tPHYSICAL_ADDRESS1 as string,\n\t\tPHYSICAL_ADDRESS2 as string,\n\t\tPHYSICAL_CITY as string,\n\t\tPHYSICAL_STATE as string,\n\t\tPHYSICAL_ZIP as string,\n\t\tMAILING_ADDRESS1 as string,\n\t\tMAILING_ADDRESS2 as string,\n\t\tMAILING_CITY as string,\n\t\tMAILING_STATE as string,\n\t\tMAILING_ZIP as string,\n\t\tPHONE as string,\n\t\tFAX as string,\n\t\tEXCLUDEFROMMRCHASE as string,\n\t\tEXCLUDEFROMPRRELATIONSHIP as string,\n\t\tSITE_TYPE as string,\n\t\tDEA_NUMBER as string,\n\t\tLANGUAGE as string,\n\t\tClient_Provider_ID as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tCounty as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tSSN as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tLocation_Key as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string,\n\t\tProvider_Location_Effective_Date as string,\n\t\tProvider_Location_Termination_Date as string,\n\t\tUsage_Preference_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 derive(PROVIDER_ALTERNATE_IDENTIFIER = PROVIDER_ID + TIN) ~> DerivedColumn1\nDerivedColumn1 select(mapColumn(\n\t\tPROVIDER_ID,\n\t\tPROVIDER_ALTERNATE_IDENTIFIER\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(input(\n\t\tProvider_Alternate_Identifier as string,\n\t\tProvider_ID as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Alternate_Identifier = PROVIDER_ALTERNATE_IDENTIFIER,\n\t\tProvider_ID = PROVIDER_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "load_provider_data1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_load_provider_type1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tCode as string,\n\t\tDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tProvider_Type_Code as string,\n\t\tProvider_Type_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Type_Code = Code,\n\t\tProvider_Type_Description = Description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/load_provider_data1')]",
+				"[concat(variables('factoryId'), '/datasets/Sink_load_provider_type1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_Provider",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink_Provider_Alternate_Identifier",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tPROVIDER_ID as string,\n\t\tCMS_Provider_ID as string,\n\t\tUPIN as string,\n\t\tNPI as string,\n\t\tTIN as string,\n\t\tTIMELY_FILING_LIMIT as string,\n\t\tFIRST_NAME as string,\n\t\tMIDDLE_NAME as string,\n\t\tLAST_NAME as string,\n\t\tPROVIDER_NAME_PREFIX as string,\n\t\tPROVIDER_NAME_SUFIX as string,\n\t\tPROVIDER_TITLE as string,\n\t\tPHYSICAL_ADDRESS1 as string,\n\t\tPHYSICAL_ADDRESS2 as string,\n\t\tPHYSICAL_CITY as string,\n\t\tPHYSICAL_STATE as string,\n\t\tPHYSICAL_ZIP as string,\n\t\tPHONE as string,\n\t\tFAX as string,\n\t\tEXCLUDEFROMMRCHASE as string,\n\t\tEXCLUDEFROMPRRELATIONSHIP as string,\n\t\tDEA_NUMBER as string,\n\t\tLANGUAGE as string,\n\t\tClient_Provider_ID as string,\n\t\tCompany_Name as string,\n\t\tEmail_Address as string,\n\t\tEmail_Usage_Type_Code as string,\n\t\tCounty as string,\n\t\tPhone_Number_2 as string,\n\t\tPhone_Number_3 as string,\n\t\tFax_Number_2 as string,\n\t\tFax_Number_3 as string,\n\t\tClient_Location_ID as string,\n\t\tLocation_Name as string,\n\t\tLocation_Usage_Type_Code as string,\n\t\tLocation_Contact_Full_Name as string,\n\t\tLocation_Contact_First_Name as string,\n\t\tLocation_Contact_Last_Name as string,\n\t\tSSN as string,\n\t\tNetwork_Ind as string,\n\t\tFacility_Code as string,\n\t\tManagement_Group_Code as string,\n\t\tLocation_Key as string,\n\t\tSource_System_Of_Record as string,\n\t\tMedicare_Facility_Number as string,\n\t\tProvider_Location_Effective_Date as string,\n\t\tProvider_Location_Termination_Date as string,\n\t\tUsage_Preference_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 select(mapColumn(\n\t\tPROVIDER_ID,\n\t\tTIN\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(Provider_Alternate_Identifier = PROVIDER_ID + TIN) ~> DerivedColumn1\nDerivedColumn1 sink(input(\n\t\tProvider_Alternate_Identifier as string,\n\t\tProvider_ID as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Alternate_Identifier,\n\t\tProvider_ID = PROVIDER_ID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SRC_Provider')]",
+				"[concat(variables('factoryId'), '/datasets/Sink_Provider_Alternate_Identifier')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SRC_Load_Payers_Code",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SINK_payers_Code",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tValue as string,\n\t\tDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tPayerCode_ID as string,\n\t\tPayerCode_Description as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tPayerCode_ID = Value,\n\t\tPayerCode_Description = Description\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SRC_Load_Payers_Code')]",
+				"[concat(variables('factoryId'), '/datasets/SINK_payers_Code')]"
+			]
+		}
+	]
+}
