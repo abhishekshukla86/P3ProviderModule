@@ -1,0 +1,60 @@
+{
+	"name": "SRC_provider_Enroll",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SRC_PROVIDER_STORAGE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SRC_Provider_Enrollment.csv",
+				"container": "p3provider"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "PROVIDERKEY",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDEREFFECTIVEDATE",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDERTERMINATIONDATE",
+				"type": "String"
+			},
+			{
+				"name": "PAYERCODE",
+				"type": "String"
+			},
+			{
+				"name": "PRODUCTCODE",
+				"type": "String"
+			},
+			{
+				"name": "PLANCODE",
+				"type": "String"
+			},
+			{
+				"name": "BOARDCERTIFICATION",
+				"type": "String"
+			},
+			{
+				"name": "NETWORKFLAG",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDERPANELCODE",
+				"type": "String"
+			}
+		]
+	}
+}
