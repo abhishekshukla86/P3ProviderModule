@@ -2,17 +2,16 @@
 	"name": "SRC_ProductCodes",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "SRC_P3_Module",
+			"referenceName": "SRC_PROVIDER_STORAGE",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Product Codes",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "SRC_Product Codes_updated.xlsx",
-				"container": "providermodel"
+				"container": "p3provider"
 			},
 			"firstRowAsHeader": true
 		},
