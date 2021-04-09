@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "SRC_Provider_Group.csv",
+				"fileName": "SRC_Provider_Group_non_dupi.csv",
 				"container": "p3provider"
 			},
 			"columnDelimiter": ",",
