@@ -1,0 +1,41 @@
+{
+	"name": "AzureSqlTable12",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PROVIDER_MODEL_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Specialty_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Specialty_Description",
+				"type": "varchar"
+			},
+			{
+				"name": "Taxonomy_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Taxonomy_Desc_Type",
+				"type": "varchar"
+			},
+			{
+				"name": "Taxonomy_Description",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Type_Code",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "REF_SpecialtyCodes"
+		}
+	}
+}
