@@ -1,0 +1,25 @@
+{
+	"name": "SInk_Provider_Language_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PROVIDER_MODEL_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_KEY",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Language_Code",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Provider_Language"
+		}
+	}
+}
