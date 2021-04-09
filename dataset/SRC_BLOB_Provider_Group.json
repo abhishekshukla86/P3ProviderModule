@@ -20,34 +20,6 @@
 		},
 		"schema": [
 			{
-				"name": "PROVIDER_ID",
-				"type": "String"
-			},
-			{
-				"name": "FIRST_NAME",
-				"type": "String"
-			},
-			{
-				"name": "MIDDLE_NAME",
-				"type": "String"
-			},
-			{
-				"name": "LASTNAME",
-				"type": "String"
-			},
-			{
-				"name": "MUNICIPALITY",
-				"type": "String"
-			},
-			{
-				"name": "OFFICIAL_CITY",
-				"type": "String"
-			},
-			{
-				"name": "PROVIDER_REGION",
-				"type": "String"
-			},
-			{
 				"name": "GROUP_PROVIDER_ID",
 				"type": "String"
 			},
