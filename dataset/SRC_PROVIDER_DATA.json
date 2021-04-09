@@ -120,7 +120,7 @@
 				"type": "String"
 			},
 			{
-				"name": "Location_Name25",
+				"name": "Location_name",
 				"type": "String"
 			},
 			{
@@ -213,10 +213,6 @@
 			},
 			{
 				"name": "Client_Location_ID",
-				"type": "String"
-			},
-			{
-				"name": "Location_Name49",
 				"type": "String"
 			},
 			{
