@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "SRC_Provider_Enrollment.csv",
-				"container": "providermodel"
+				"container": "p3provider"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
