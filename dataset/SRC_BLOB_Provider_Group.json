@@ -1,0 +1,64 @@
+{
+	"name": "SRC_BLOB_Provider_Group",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SRC_PROVIDER_STORAGE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SRC_Provider_Group.csv",
+				"container": "p3provider"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "PROVIDER_ID",
+				"type": "String"
+			},
+			{
+				"name": "FIRST_NAME",
+				"type": "String"
+			},
+			{
+				"name": "MIDDLE_NAME",
+				"type": "String"
+			},
+			{
+				"name": "LASTNAME",
+				"type": "String"
+			},
+			{
+				"name": "MUNICIPALITY",
+				"type": "String"
+			},
+			{
+				"name": "OFFICIAL_CITY",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER_REGION",
+				"type": "String"
+			},
+			{
+				"name": "GROUP_PROVIDER_ID",
+				"type": "String"
+			},
+			{
+				"name": "GROUP_NAME8",
+				"type": "String"
+			},
+			{
+				"name": "GROUP_NAME9",
+				"type": "String"
+			}
+		]
+	}
+}
