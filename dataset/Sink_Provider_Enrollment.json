@@ -2,7 +2,7 @@
 	"name": "Sink_Provider_Enrollment",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDatabase1",
+			"referenceName": "PROVIDER_MODEL_DB",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
