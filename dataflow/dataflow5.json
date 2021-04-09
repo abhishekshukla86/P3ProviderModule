@@ -17,15 +17,25 @@
 						"type": "DatasetReference"
 					},
 					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable10",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
 					"name": "Lookup1"
+				},
+				{
+					"name": "Lookup2"
 				}
 			],
-			"script": "source(output(\n\t\tGROUP_PROVIDER_ID as string,\n\t\tGROUP_NAME as string,\n\t\t{Provider_Group_Status            } as string,\n\t\t{Provider_Group_Address_1         } as string,\n\t\t{Provider_Group_Address_2         } as string,\n\t\t{Provider_Group_City              } as string,\n\t\t{Provider_Group_State_Code        } as string,\n\t\t{Provider_Group_Zip_Code          } as string,\n\t\t{Provider_Group_Contact           } as string,\n\t\t{Provider_Group_Phone             } as string,\n\t\t{Provider_Group_Fax               } as string,\n\t\t{Provider_Group_Email             } as string,\n\t\t{Provider_Group_Group_Date        } as string,\n\t\t{Provider_Group_End_Date          } as string,\n\t\t{Provider_Group_Type              } as string,\n\t\t{Provider_Group_Function_Indicator  } as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tProvider_Group_ID as string,\n\t\tProvider_Group_Name as string,\n\t\tProvider_Group_Status as string,\n\t\tProvider_Group_Address_1 as string,\n\t\tProvider_Group_Address_2 as string,\n\t\tProvider_Group_City as string,\n\t\tProvider_Group_State_Code as string,\n\t\tProvider_Group_Zip_Code as string,\n\t\tProvider_Group_Contact as string,\n\t\tProvider_Group_Phone as string,\n\t\tProvider_Group_Fax as string,\n\t\tProvider_Group_Email as string,\n\t\tProvider_Group_Group_Date as date,\n\t\tProvider_Group_End_Date as date,\n\t\tProvider_Group_Type as string,\n\t\tProvider_Group_Function_Indicator as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource1, source2 lookup(GROUP_PROVIDER_ID == Provider_Group_ID,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup1"
+			"script": "source(output(\n\t\tGROUP_PROVIDER_ID as integer,\n\t\tGROUP_NAME as string,\n\t\t{Provider_Group_Status            } as string,\n\t\t{Provider_Group_Address_1         } as string,\n\t\t{Provider_Group_Address_2         } as string,\n\t\t{Provider_Group_City              } as string,\n\t\t{Provider_Group_State_Code        } as string,\n\t\t{Provider_Group_Zip_Code          } as string,\n\t\t{Provider_Group_Contact           } as string,\n\t\t{Provider_Group_Phone             } as string,\n\t\t{Provider_Group_Fax               } as string,\n\t\t{Provider_Group_Email             } as string,\n\t\t{Provider_Group_Group_Date        } as string,\n\t\t{Provider_Group_End_Date          } as string,\n\t\t{Provider_Group_Type              } as string,\n\t\t{Provider_Group_Function_Indicator  } as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tProvider_Group_ID as string,\n\t\tProvider_Group_Name as string,\n\t\tProvider_Group_Status as string,\n\t\tProvider_Group_Address_1 as string,\n\t\tProvider_Group_Address_2 as string,\n\t\tProvider_Group_City as string,\n\t\tProvider_Group_State_Code as string,\n\t\tProvider_Group_Zip_Code as string,\n\t\tProvider_Group_Contact as string,\n\t\tProvider_Group_Phone as string,\n\t\tProvider_Group_Fax as string,\n\t\tProvider_Group_Email as string,\n\t\tProvider_Group_Group_Date as date,\n\t\tProvider_Group_End_Date as date,\n\t\tProvider_Group_Type as string,\n\t\tProvider_Group_Function_Indicator as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource(output(\n\t\tProvider_Alternate_Identifier as string,\n\t\tProvider_ID as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source3\nsource1, source2 lookup(GROUP_PROVIDER_ID == Provider_Group_ID,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup1\nLookup1, source3 lookup(GROUP_PROVIDER_ID == Provider_ID,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup2"
 		}
 	}
 }
