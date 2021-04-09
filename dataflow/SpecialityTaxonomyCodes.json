@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText6",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -22,7 +29,7 @@
 				}
 			],
 			"transformations": [],
-			"script": "source(output(\n\t\tSpeciality_KEY as string,\n\t\t{CMS SPECIALTY CODE} as string,\n\t\t{CMS SPECIALTY DESCRIPTION} as string,\n\t\t{PROVIDER TAXONOMY CODE} as string,\n\t\t{PROVIDER TAXONOMY DESCRIPTION TYPE} as string,\n\t\t{PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION} as string,\n\t\t{RBI DATA SPECIALITY CODE} as string,\n\t\t{PROVIDER TYPE} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tSpecialty_ID as string,\n\t\tSpecialty_Description as string,\n\t\tTaxonomy_Code as string,\n\t\tTaxonomy_Desc_Type as string,\n\t\tTaxonomy_Description as string,\n\t\tProvider_Type_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tSpecialty_ID = Speciality_KEY,\n\t\tSpecialty_Description = {CMS SPECIALTY DESCRIPTION},\n\t\tTaxonomy_Code = {PROVIDER TAXONOMY CODE},\n\t\tTaxonomy_Desc_Type = {PROVIDER TAXONOMY DESCRIPTION TYPE},\n\t\tTaxonomy_Description = {PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION},\n\t\tProvider_Type_Code = {PROVIDER TYPE}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+			"script": "source(output(\n\t\tSpeciality_KEY as string,\n\t\t{CMS SPECIALTY CODE} as string,\n\t\t{CMS SPECIALTY DESCRIPTION} as string,\n\t\t{PROVIDER TAXONOMY CODE} as string,\n\t\t{PROVIDER TAXONOMY DESCRIPTION TYPE} as string,\n\t\t{PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION} as string,\n\t\t{RBI DATA SPECIALITY CODE} as string,\n\t\t{PROVIDER TYPE} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tSpeciality_KEY as string,\n\t\t{CMS SPECIALTY CODE} as string,\n\t\t{CMS SPECIALTY DESCRIPTION} as string,\n\t\t{PROVIDER TAXONOMY CODE} as string,\n\t\t{PROVIDER TAXONOMY DESCRIPTION TYPE} as string,\n\t\t{PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION} as string,\n\t\t{RBI DATA SPECIALITY CODE} as string,\n\t\t{PROVIDER TYPE} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource1 sink(input(\n\t\tSpecialty_ID as string,\n\t\tSpecialty_Description as string,\n\t\tTaxonomy_Code as string,\n\t\tTaxonomy_Desc_Type as string,\n\t\tTaxonomy_Description as string,\n\t\tProvider_Type_Code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tSpecialty_ID = Speciality_KEY,\n\t\tSpecialty_Description = {CMS SPECIALTY DESCRIPTION},\n\t\tTaxonomy_Code = {PROVIDER TAXONOMY CODE},\n\t\tTaxonomy_Desc_Type = {PROVIDER TAXONOMY DESCRIPTION TYPE},\n\t\tTaxonomy_Description = {PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION},\n\t\tProvider_Type_Code = {PROVIDER TYPE}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
