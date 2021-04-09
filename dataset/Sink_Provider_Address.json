@@ -1,0 +1,74 @@
+{
+	"name": "Sink_Provider_Address",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PROVIDER_MODEL_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_Address_Id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Provider_KEY",
+				"type": "varchar"
+			},
+			{
+				"name": "Address_Line_1",
+				"type": "varchar"
+			},
+			{
+				"name": "Address_Line_2",
+				"type": "varchar"
+			},
+			{
+				"name": "City",
+				"type": "varchar"
+			},
+			{
+				"name": "State_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Zip_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Country_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Phone",
+				"type": "varchar"
+			},
+			{
+				"name": "Fax",
+				"type": "varchar"
+			},
+			{
+				"name": "Contact_First_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Contact_Last_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Location_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Address_Type",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Provider_Address"
+		}
+	}
+}
