@@ -6,7 +6,7 @@
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
 			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=p3demoserver1.database.windows.net;initial catalog=PROVIDER_DB_1;user id=sqladmin",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlAzREFUQUZBQ1RPUllERU1PMV80M2Q4NTEyMy1mZWU5LTQ1OWYtYTEzOS02ZDU2ZGUyMDU2MTgiDQp9"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlAzREFUQUZBQ1RPUllERU1PMV9hYzQzZDAxNi01NGNhLTQ1MTQtYWNiMi04NGZjM2VjODU2ZTQiDQp9"
 		}
 	}
 }
