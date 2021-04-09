@@ -1,0 +1,21 @@
+{
+	"name": "Excel3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SRC_PROVIDER_STORAGE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SRC_SpecialityTaxonomyCodes_EXCEL.xlsx",
+				"container": "p3provider"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
