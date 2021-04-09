@@ -1,0 +1,81 @@
+{
+	"name": "AzureSqlTable9",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PROVIDER_MODEL_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_Group_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Status",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Address_1",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Address_2",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_City",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_State_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Zip_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Contact",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Phone",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Fax",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Email",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Group_Date",
+				"type": "date"
+			},
+			{
+				"name": "Provider_Group_End_Date",
+				"type": "date"
+			},
+			{
+				"name": "Provider_Group_Type",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Group_Function_Indicator",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Provider_Group"
+		}
+	}
+}
