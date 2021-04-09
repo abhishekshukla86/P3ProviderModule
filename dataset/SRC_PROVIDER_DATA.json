@@ -68,6 +68,26 @@
 				"type": "String"
 			},
 			{
+				"name": "SITE_ID",
+				"type": "String"
+			},
+			{
+				"name": "SITE_NAME",
+				"type": "String"
+			},
+			{
+				"name": "PRIMARY_SITE_FLAG",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER_SPECIALTY_ID",
+				"type": "String"
+			},
+			{
+				"name": "SPECIALTY_DESC",
+				"type": "String"
+			},
+			{
 				"name": "PHYSICAL_ADDRESS1",
 				"type": "String"
 			},
@@ -88,6 +108,46 @@
 				"type": "String"
 			},
 			{
+				"name": "Country_Code",
+				"type": "String"
+			},
+			{
+				"name": "Contact_First_Name",
+				"type": "String"
+			},
+			{
+				"name": "Contact_Last_Name",
+				"type": "String"
+			},
+			{
+				"name": "Location_Name25",
+				"type": "String"
+			},
+			{
+				"name": "Address_Type",
+				"type": "String"
+			},
+			{
+				"name": "MAILING_ADDRESS1",
+				"type": "String"
+			},
+			{
+				"name": "MAILING_ADDRESS2",
+				"type": "String"
+			},
+			{
+				"name": "MAILING_CITY",
+				"type": "String"
+			},
+			{
+				"name": "MAILING_STATE",
+				"type": "String"
+			},
+			{
+				"name": "MAILING_ZIP",
+				"type": "String"
+			},
+			{
 				"name": "PHONE",
 				"type": "String"
 			},
@@ -101,6 +161,10 @@
 			},
 			{
 				"name": "EXCLUDEFROMPRRELATIONSHIP",
+				"type": "String"
+			},
+			{
+				"name": "SITE_TYPE",
 				"type": "String"
 			},
 			{
@@ -152,7 +216,7 @@
 				"type": "String"
 			},
 			{
-				"name": "Location_Name",
+				"name": "Location_Name49",
 				"type": "String"
 			},
 			{
