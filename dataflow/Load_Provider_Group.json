@@ -1,0 +1,28 @@
+{
+	"name": "Load_Provider_Group",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SRC_BLOB_Provider_Group",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SInk_SQL_Provider_Group",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"script": "source(output(\n\t\tPROVIDER_ID as string,\n\t\tFIRST_NAME as string,\n\t\tMIDDLE_NAME as string,\n\t\tLASTNAME as string,\n\t\tMUNICIPALITY as string,\n\t\tOFFICIAL_CITY as string,\n\t\tPROVIDER_REGION as string,\n\t\tGROUP_PROVIDER_ID as string,\n\t\tGROUP_NAME as string,\n\t\t{Provider_Group_Status            } as string,\n\t\t{Provider_Group_Address_1         } as string,\n\t\t{Provider_Group_Address_2         } as string,\n\t\t{Provider_Group_City              } as string,\n\t\t{Provider_Group_State_Code        } as string,\n\t\t{Provider_Group_Zip_Code          } as string,\n\t\t{Provider_Group_Contact           } as string,\n\t\t{Provider_Group_Phone             } as string,\n\t\t{Provider_Group_Fax               } as string,\n\t\t{Provider_Group_Email             } as string,\n\t\t{Provider_Group_Group_Date        } as string,\n\t\t{Provider_Group_End_Date          } as string,\n\t\t{Provider_Group_Type              } as string,\n\t\t{Provider_Group_Function_Indicator  } as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 sink(input(\n\t\tProvider_Group_ID as string,\n\t\tProvider_Group_Name as string,\n\t\tProvider_Group_Status as string,\n\t\tProvider_Group_Address_1 as string,\n\t\tProvider_Group_Address_2 as string,\n\t\tProvider_Group_City as string,\n\t\tProvider_Group_State_Code as string,\n\t\tProvider_Group_Zip_Code as string,\n\t\tProvider_Group_Contact as string,\n\t\tProvider_Group_Phone as string,\n\t\tProvider_Group_Fax as string,\n\t\tProvider_Group_Email as string,\n\t\tProvider_Group_Group_Date as date,\n\t\tProvider_Group_End_Date as date,\n\t\tProvider_Group_Type as string,\n\t\tProvider_Group_Function_Indicator as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tProvider_Group_ID = GROUP_PROVIDER_ID,\n\t\tProvider_Group_Name = GROUP_NAME,\n\t\tProvider_Group_Status = {Provider_Group_Status            },\n\t\tProvider_Group_Address_1 = {Provider_Group_Address_1         },\n\t\tProvider_Group_Address_2 = {Provider_Group_Address_2         },\n\t\tProvider_Group_City = {Provider_Group_City              },\n\t\tProvider_Group_State_Code = {Provider_Group_State_Code        },\n\t\tProvider_Group_Zip_Code = {Provider_Group_Zip_Code          },\n\t\tProvider_Group_Contact = {Provider_Group_Contact           },\n\t\tProvider_Group_Phone = {Provider_Group_Phone             },\n\t\tProvider_Group_Fax = {Provider_Group_Fax               },\n\t\tProvider_Group_Email = {Provider_Group_Email             },\n\t\tProvider_Group_Group_Date = {Provider_Group_Group_Date        },\n\t\tProvider_Group_End_Date = {Provider_Group_End_Date          },\n\t\tProvider_Group_Type = {Provider_Group_Type              },\n\t\tProvider_Group_Function_Indicator = {Provider_Group_Function_Indicator  }\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+		}
+	}
+}
