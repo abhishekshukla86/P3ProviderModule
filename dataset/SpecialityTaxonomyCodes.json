@@ -1,0 +1,56 @@
+{
+	"name": "SpecialityTaxonomyCodes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SRC_PROVIDER_STORAGE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SRC_SpecialityTaxonomyCodes.csv",
+				"container": "p3provider"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Speciality_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CMS SPECIALTY CODE",
+				"type": "String"
+			},
+			{
+				"name": "CMS SPECIALTY DESCRIPTION",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER TAXONOMY CODE",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER TAXONOMY DESCRIPTION TYPE",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION",
+				"type": "String"
+			},
+			{
+				"name": "RBI DATA SPECIALITY CODE",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER TYPE",
+				"type": "String"
+			}
+		]
+	}
+}
