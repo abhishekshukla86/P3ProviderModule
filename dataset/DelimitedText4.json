@@ -1,0 +1,88 @@
+{
+	"name": "DelimitedText4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SRC_PROVIDER_STORAGE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SRC_Provider_Group_non_dupi.csv",
+				"container": "p3provider"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "GROUP_PROVIDER_ID",
+				"type": "String"
+			},
+			{
+				"name": "GROUP_NAME",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Status            ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Address_1         ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Address_2         ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_City              ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_State_Code        ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Zip_Code          ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Contact           ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Phone             ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Fax               ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Email             ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Group_Date        ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_End_Date          ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Type              ",
+				"type": "String"
+			},
+			{
+				"name": "Provider_Group_Function_Indicator  ",
+				"type": "String"
+			}
+		]
+	}
+}
