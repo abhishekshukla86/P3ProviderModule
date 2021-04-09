@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SRC_BLOB_Provider_Group",
+						"referenceName": "DelimitedText4",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
