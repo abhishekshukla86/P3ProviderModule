@@ -16,6 +16,39 @@
 			},
 			"firstRowAsHeader": true
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "Speciality_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CMS SPECIALTY CODE",
+				"type": "String"
+			},
+			{
+				"name": "CMS SPECIALTY DESCRIPTION",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER TAXONOMY CODE",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER TAXONOMY DESCRIPTION TYPE",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER TAXONOMY DESCRIPTION CLASSIFICATION and SPECIALIZATION",
+				"type": "String"
+			},
+			{
+				"name": "RBI DATA SPECIALITY CODE",
+				"type": "String"
+			},
+			{
+				"name": "PROVIDER TYPE",
+				"type": "String"
+			}
+		]
 	}
 }
