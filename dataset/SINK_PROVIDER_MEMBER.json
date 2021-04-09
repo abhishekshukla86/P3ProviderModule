@@ -28,7 +28,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "Provider_Site"
+			"table": "Provider_Language"
 		}
 	}
 }
