@@ -1,0 +1,51 @@
+{
+	"name": "SINK_PROVIDER_SUPLLEMENTAL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PROVIDER_MODEL_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Provider_Supplemental_Id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Provider_KEY",
+				"type": "varchar"
+			},
+			{
+				"name": "Primary_Specialty_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Primary_Type_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Primary_Taxonomy_Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Provider_Site_Id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Primary_Site_Flag",
+				"type": "char"
+			},
+			{
+				"name": "Site_Type",
+				"type": "char"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Provider_Supplemental"
+		}
+	}
+}
